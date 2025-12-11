@@ -264,58 +264,75 @@ def load_recommendation_engine():
 
 
 def render_recommendation_card(row: pd.Series, rank: int):
-    """Render a single recommendation card"""
+    """Render a single recommendation card using Streamlit components"""
     
     # Match quality badge
     quality = row['Match_Quality']
-    quality_class = f"match-{quality.lower()}"
     
-    # Quality emoji
+    # Quality colors
+    quality_colors = {
+        'High': '#10b981',
+        'Medium': '#f59e0b',
+        'Low': '#6b7280'
+    }
+    
     quality_emoji = {
         'High': '🌟',
         'Medium': '⭐',
         'Low': '💡'
     }
     
-    html = f"""
-    <div class="recommendation-card">
-        <h2>#{rank} {row['Service_Name']} {quality_emoji.get(quality, '⭐')}</h2>
-        <div class="match-badge {quality_class}">{quality} Match</div>
-        <div class="score-display">{row['Match_Score']:.0%}</div>
-        
-        <p style="font-size: 16px; color: #555; margin: 15px 0;">
-            <strong>Description:</strong> {row['Description']}
-        </p>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;">
-            <div>
-                <strong>🏢 Business Type:</strong><br/>
-                {row['Target_Business_Type']}
-            </div>
-            <div>
-                <strong>💰 Price:</strong><br/>
-                {row['Price_Category']} ({get_price_range(row['Price_Category'])})
-            </div>
-            <div>
-                <strong>🗣️ Language:</strong><br/>
-                {row['Language_Support']}
-            </div>
-            <div>
-                <strong>📍 Location:</strong><br/>
-                {row['Location_Area']}
-            </div>
+    # Create a container with border
+    with st.container():
+        st.markdown(f"""
+        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; 
+                    padding: 24px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
         </div>
+        """, unsafe_allow_html=True)
         
-        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px;">
-            <strong>💡 Why This Recommendation:</strong><br/>
-            <p style="margin: 10px 0; font-style: italic; color: #555;">
-                {row['Explanation']}
-            </p>
+        # Header
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.markdown(f"### #{rank} {row['Service_Name']} {quality_emoji.get(quality, '⭐')}")
+        with col2:
+            st.markdown(f"""
+            <div style="background: {quality_colors[quality]}; color: white; padding: 6px 14px; 
+                        border-radius: 6px; font-weight: 600; font-size: 13px; text-align: center;">
+                {quality} Match
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Score
+        st.markdown(f"""
+        <div style="font-size: 42px; font-weight: 700; color: {quality_colors[quality]}; margin: 12px 0;">
+            {row['Match_Score']:.0%}
         </div>
-    </div>
-    """
-    
-    st.markdown(html, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
+        
+        # Description
+        st.markdown(f"**Description:** {row['Description']}")
+        
+        # Details in columns
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.markdown("**Business Type**")
+            st.write(row['Target_Business_Type'])
+        with col2:
+            st.markdown("**Price**")
+            st.write(f"{row['Price_Category']}")
+            st.caption(get_price_range(row['Price_Category']))
+        with col3:
+            st.markdown("**Language**")
+            st.write(row['Language_Support'])
+        with col4:
+            st.markdown("**Location**")
+            st.write(row['Location_Area'])
+        
+        # Explanation
+        st.info(f"💡 **Why This Recommendation:** {row['Explanation']}")
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+
 
 
 def render_statistics_dashboard(engine):
@@ -561,7 +578,8 @@ def main():
                     render_visualization(recommendations)
                 
                 # Display recommendations
-                st.markdown(f"## 🎯 Top {len(recommendations)} Recommendations")
+                st.markdown(f"## Top {len(recommendations)} Recommendations")
+                st.markdown("---")
                 
                 for idx, row in recommendations.iterrows():
                     render_recommendation_card(row, idx + 1)
