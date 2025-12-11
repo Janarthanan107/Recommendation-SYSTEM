@@ -22,118 +22,272 @@ import config
 # Page configuration
 st.set_page_config(**config.PAGE_CONFIG)
 
-# Custom CSS for premium styling
+# Custom CSS for ultra-premium styling
 st.markdown("""
 <style>
-    /* Main container */
-    .main {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+    
+    * {
+        font-family: 'Inter', sans-serif;
     }
     
-    /* Headers */
+    /* Main container with animated gradient */
+    .main {
+        background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* Headers with glow effect */
     h1 {
         color: #ffffff;
-        font-weight: 700;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        font-weight: 800;
+        text-shadow: 0 0 20px rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.3);
+        letter-spacing: -0.5px;
     }
     
-    h2, h3 {
+    h2 {
+        color: #ffffff;
+        font-weight: 700;
+        text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+    
+    h3 {
         color: #f0f0f0;
         font-weight: 600;
     }
     
-    /* Cards */
+    /* Enhanced recommendation cards */
     .recommendation-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 25px;
-        margin: 20px 0;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        border-left: 5px solid #667eea;
-        transition: transform 0.3s ease;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+        border-radius: 20px;
+        padding: 30px;
+        margin: 25px 0;
+        box-shadow: 
+            0 20px 60px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        border-left: 6px solid;
+        border-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%) 1;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .recommendation-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s;
+    }
+    
+    .recommendation-card:hover::before {
+        left: 100%;
     }
     
     .recommendation-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 
+            0 30px 80px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
     }
     
-    /* Badges */
+    /* Premium badges with glow */
     .match-badge {
         display: inline-block;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: 700;
         font-size: 14px;
         margin: 5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .match-badge:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
     
     .match-high {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
     }
     
     .match-medium {
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         color: white;
+        box-shadow: 0 4px 15px rgba(240, 147, 251, 0.5);
     }
     
     .match-low {
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         color: white;
+        box-shadow: 0 4px 15px rgba(79, 172, 254, 0.5);
     }
     
-    /* Score display */
+    /* Animated score display */
     .score-display {
-        font-size: 42px;
-        font-weight: 700;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-size: 56px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin: 10px 0;
+        margin: 15px 0;
+        animation: pulse 2s ease-in-out infinite;
     }
     
-    /* Sidebar */
-    .css-1d391kg {
-        background: rgba(255, 255, 255, 0.1);
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
     }
     
-    /* Buttons */
+    /* Sidebar enhancement */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95));
+        backdrop-filter: blur(20px);
+    }
+    
+    [data-testid="stSidebar"] > div {
+        background: transparent;
+    }
+    
+    /* Premium buttons */
     .stButton>button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: none;
-        border-radius: 25px;
-        padding: 12px 30px;
-        font-weight: 600;
+        border-radius: 30px;
+        padding: 15px 40px;
+        font-weight: 700;
         font-size: 16px;
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     
     .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
     
-    /* Info boxes */
+    /* Enhanced info boxes */
     .info-box {
-        background: rgba(255, 255, 255, 0.15);
-        border-radius: 10px;
-        padding: 15px;
-        margin: 10px 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+        border-radius: 15px;
+        padding: 20px;
+        margin: 15px 0;
         color: white;
-        border-left: 4px solid #667eea;
+        border-left: 5px solid rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
     }
     
-    /* Metric cards */
+    .info-box:hover {
+        transform: translateX(5px);
+        border-left-color: white;
+    }
+    
+    /* Premium metric cards */
     .metric-card {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 12px;
-        padding: 20px;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+        border-radius: 20px;
+        padding: 30px;
         text-align: center;
         margin: 10px;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    /* Select boxes */
+    .stSelectbox > div > div {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        border: 2px solid rgba(102, 126, 234, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .stSelectbox > div > div:focus-within {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+    
+    /* Radio buttons */
+    .stRadio > div {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+    }
+    
+    /* Sliders */
+    .stSlider > div > div {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Feature highlight cards */
+    .feature-card {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
         backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .feature-card:hover {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+        transform: scale(1.05);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    /* Loading animation */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -460,47 +614,107 @@ def main():
                 st.exception(e)
     
     else:
-        # Welcome message
+        # Welcome message with enhanced design
         st.markdown("""
-        <div style="text-align: center; padding: 60px 20px; background: rgba(255,255,255,0.1); border-radius: 15px; margin: 40px 0;">
-            <h2 style="color: white; margin-bottom: 20px;">👈 Get Started!</h2>
-            <p style="color: white; font-size: 18px;">
+        <div style="text-align: center; padding: 80px 30px; background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1)); 
+                    border-radius: 30px; margin: 50px 0; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3);
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <h2 style="color: white; margin-bottom: 25px; font-size: 42px; font-weight: 800;">
+                👈 Ready to Discover Perfect Services?
+            </h2>
+            <p style="color: white; font-size: 20px; line-height: 1.8; max-width: 800px; margin: 0 auto;">
                 Select your preferences in the sidebar and click 
-                <strong>"Get Recommendations"</strong> to discover the perfect services for your business!
+                <strong style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 5px 15px; border-radius: 20px;">
+                "Get Recommendations"
+                </strong> to discover the perfect services tailored for your business!
             </p>
-            <p style="color: white; font-size: 16px; margin-top: 20px;">
-                Our ML algorithm analyzes multiple factors including business type, budget, 
-                language, and location to provide you with the most relevant recommendations.
+            <p style="color: rgba(255,255,255,0.9); font-size: 16px; margin-top: 30px; line-height: 1.6;">
+                ✨ Our advanced ML algorithms analyze <strong>business type, budget, language, and location</strong> 
+                to provide you with the most relevant, personalized recommendations.
             </p>
         </div>
         """, unsafe_allow_html=True)
         
-        # Feature highlights
-        st.markdown("## ✨ Features")
+        # Feature highlights with enhanced cards
+        st.markdown("## ✨ Why Choose Our AI System?")
+        st.markdown("<br>", unsafe_allow_html=True)
         
         col1, col2, col3 = st.columns(3)
         
         with col1:
             st.markdown("""
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; text-align: center;">
-                <h3 style="color: white;">🤖 ML-Powered</h3>
-                <p style="color: white;">Advanced algorithms for accurate recommendations</p>
+            <div class="feature-card">
+                <h1 style="font-size: 48px; margin: 0;">🤖</h1>
+                <h3 style="color: white; margin: 20px 0 15px 0;">ML-Powered Intelligence</h3>
+                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                    Advanced machine learning algorithms including KNN, Cosine Similarity, and Weighted Scoring 
+                    analyze thousands of data points to find your perfect match.
+                </p>
             </div>
             """, unsafe_allow_html=True)
         
         with col2:
             st.markdown("""
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; text-align: center;">
-                <h3 style="color: white;">💡 Explainable</h3>
-                <p style="color: white;">Clear reasons for each recommendation</p>
+            <div class="feature-card">
+                <h1 style="font-size: 48px; margin: 0;">💡</h1>
+                <h3 style="color: white; margin: 20px 0 15px 0;">Explainable AI</h3>
+                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                    Every recommendation comes with clear, human-readable explanations showing exactly why 
+                    we think it's a great fit for you. No black boxes!
+                </p>
             </div>
             """, unsafe_allow_html=True)
         
         with col3:
             st.markdown("""
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; text-align: center;">
-                <h3 style="color: white;">⚡ Fast</h3>
-                <p style="color: white;">Instant recommendations in under a second</p>
+            <div class="feature-card">
+                <h1 style="font-size: 48px; margin: 0;">⚡</h1>
+                <h3 style="color: white; margin: 20px 0 15px 0;">Lightning Fast</h3>
+                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                    Get instant, real-time recommendations in under 500ms. Our optimized algorithms 
+                    ensure you spend less time waiting and more time deciding.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Additional features row
+        st.markdown("<br><br>", unsafe_allow_html=True)
+        
+        col4, col5, col6 = st.columns(3)
+        
+        with col4:
+            st.markdown("""
+            <div class="feature-card">
+                <h1 style="font-size: 48px; margin: 0;">🎯</h1>
+                <h3 style="color: white; margin: 20px 0 15px 0;">Smart Matching</h3>
+                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                    Multi-dimensional feature matching considers all your preferences 
+                    to deliver highly accurate, personalized recommendations.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col5:
+            st.markdown("""
+            <div class="feature-card">
+                <h1 style="font-size: 48px; margin: 0;">📊</h1>
+                <h3 style="color: white; margin: 20px 0 15px 0;">Visual Insights</h3>
+                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                    Interactive visualizations and match quality indicators help you 
+                    understand and compare recommendations at a glance.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col6:
+            st.markdown("""
+            <div class="feature-card">
+                <h1 style="font-size: 48px; margin: 0;">🔒</h1>
+                <h3 style="color: white; margin: 20px 0 15px 0;">Data Privacy</h3>
+                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                    All processing happens locally. Your preferences and data 
+                    remain private and secure on your device.
+                </p>
             </div>
             """, unsafe_allow_html=True)
     
