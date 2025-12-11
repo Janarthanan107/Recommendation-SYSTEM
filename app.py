@@ -264,74 +264,80 @@ def load_recommendation_engine():
 
 
 def render_recommendation_card(row: pd.Series, rank: int):
-    """Render a single recommendation card using Streamlit components"""
+    """Render a single recommendation card with clean design"""
     
-    # Match quality badge
+    # Match quality configuration
     quality = row['Match_Quality']
     
-    # Quality colors
-    quality_colors = {
-        'High': '#10b981',
-        'Medium': '#f59e0b',
-        'Low': '#6b7280'
+    quality_config = {
+        'High': {'color': '#10b981', 'bg': '#d1fae5', 'icon': '✓'},
+        'Medium': {'color': '#f59e0b', 'bg': '#fef3c7', 'icon': '~'},
+        'Low': {'color': '#6b7280', 'bg': '#f3f4f6', 'icon': '○'}
     }
     
-    quality_emoji = {
-        'High': '🌟',
-        'Medium': '⭐',
-        'Low': '💡'
-    }
+    config = quality_config[quality]
     
-    # Create a container with border
-    with st.container():
-        st.markdown(f"""
-        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; 
-                    padding: 24px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    # Create card container
+    st.markdown(f"""
+    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; 
+                padding: 24px; margin: 20px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                transition: box-shadow 0.2s;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+            <h3 style="margin: 0; color: #111827; font-size: 20px; font-weight: 600;">
+                {rank}. {row['Service_Name']}
+            </h3>
+            <span style="background: {config['bg']}; color: {config['color']}; 
+                         padding: 4px 12px; border-radius: 6px; font-size: 13px; 
+                         font-weight: 600; white-space: nowrap;">
+                {config['icon']} {quality}
+            </span>
         </div>
-        """, unsafe_allow_html=True)
         
-        # Header
-        col1, col2 = st.columns([3, 1])
-        with col1:
-            st.markdown(f"### #{rank} {row['Service_Name']} {quality_emoji.get(quality, '⭐')}")
-        with col2:
-            st.markdown(f"""
-            <div style="background: {quality_colors[quality]}; color: white; padding: 6px 14px; 
-                        border-radius: 6px; font-weight: 600; font-size: 13px; text-align: center;">
-                {quality} Match
-            </div>
-            """, unsafe_allow_html=True)
-        
-        # Score
-        st.markdown(f"""
-        <div style="font-size: 42px; font-weight: 700; color: {quality_colors[quality]}; margin: 12px 0;">
+        <div style="font-size: 36px; font-weight: 700; color: {config['color']}; margin: 12px 0;">
             {row['Match_Score']:.0%}
         </div>
-        """, unsafe_allow_html=True)
         
-        # Description
-        st.markdown(f"**Description:** {row['Description']}")
+        <p style="color: #6b7280; margin: 16px 0; line-height: 1.6;">
+            {row['Description']}
+        </p>
         
-        # Details in columns
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.markdown("**Business Type**")
-            st.write(row['Target_Business_Type'])
-        with col2:
-            st.markdown("**Price**")
-            st.write(f"{row['Price_Category']}")
-            st.caption(get_price_range(row['Price_Category']))
-        with col3:
-            st.markdown("**Language**")
-            st.write(row['Language_Support'])
-        with col4:
-            st.markdown("**Location**")
-            st.write(row['Location_Area'])
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+                    gap: 16px; margin: 20px 0; padding: 16px; background: #f9fafb; 
+                    border-radius: 8px;">
+            <div>
+                <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; 
+                            letter-spacing: 0.5px; margin-bottom: 4px;">Business</div>
+                <div style="font-weight: 600; color: #111827;">{row['Target_Business_Type']}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; 
+                            letter-spacing: 0.5px; margin-bottom: 4px;">Price</div>
+                <div style="font-weight: 600; color: #111827;">{row['Price_Category']}</div>
+                <div style="font-size: 12px; color: #9ca3af;">{get_price_range(row['Price_Category'])}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; 
+                            letter-spacing: 0.5px; margin-bottom: 4px;">Language</div>
+                <div style="font-weight: 600; color: #111827;">{row['Language_Support']}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; 
+                            letter-spacing: 0.5px; margin-bottom: 4px;">Location</div>
+                <div style="font-weight: 600; color: #111827;">{row['Location_Area']}</div>
+            </div>
+        </div>
         
-        # Explanation
-        st.info(f"💡 **Why This Recommendation:** {row['Explanation']}")
-        
-        st.markdown("<br>", unsafe_allow_html=True)
+        <div style="background: #eff6ff; border-left: 3px solid #3b82f6; 
+                    padding: 12px 16px; border-radius: 6px; margin-top: 16px;">
+            <div style="font-size: 13px; color: #1e40af; font-weight: 600; margin-bottom: 6px;">
+                💡 Why this recommendation
+            </div>
+            <div style="font-size: 14px; color: #1e3a8a; line-height: 1.5;">
+                {row['Explanation']}
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 
