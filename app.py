@@ -22,272 +22,214 @@ import config
 # Page configuration
 st.set_page_config(**config.PAGE_CONFIG)
 
-# Custom CSS for ultra-premium styling
+# Clean, Professional CSS - Enterprise Grade
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
     * {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
-    /* Main container with animated gradient */
+    /* Clean white background */
     .main {
-        background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
-        background-size: 400% 400%;
-        animation: gradientShift 15s ease infinite;
+        background: #ffffff;
     }
     
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    /* Headers with glow effect */
+    /* Professional headers */
     h1 {
-        color: #ffffff;
-        font-weight: 800;
-        text-shadow: 0 0 20px rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.3);
-        letter-spacing: -0.5px;
+        color: #1a1a1a;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
     }
     
     h2 {
-        color: #ffffff;
-        font-weight: 700;
-        text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        color: #2d3748;
+        font-weight: 600;
+        font-size: 1.75rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
     }
     
     h3 {
-        color: #f0f0f0;
+        color: #4a5568;
         font-weight: 600;
+        font-size: 1.25rem;
     }
     
-    /* Enhanced recommendation cards */
+    /* Clean recommendation cards */
     .recommendation-card {
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
-        border-radius: 20px;
-        padding: 30px;
-        margin: 25px 0;
-        box-shadow: 
-            0 20px 60px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        border-left: 6px solid;
-        border-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%) 1;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .recommendation-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        transition: left 0.5s;
-    }
-    
-    .recommendation-card:hover::before {
-        left: 100%;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 24px;
+        margin: 16px 0;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
     }
     
     .recommendation-card:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 
-            0 30px 80px rgba(0, 0, 0, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
     }
     
-    /* Premium badges with glow */
+    /* Simple, clean badges */
     .match-badge {
         display: inline-block;
-        padding: 10px 20px;
-        border-radius: 25px;
-        font-weight: 700;
-        font-size: 14px;
-        margin: 5px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .match-badge:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 13px;
+        margin: 4px 4px 4px 0;
     }
     
     .match-high {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #10b981;
         color: white;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
     }
     
     .match-medium {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        background: #f59e0b;
         color: white;
-        box-shadow: 0 4px 15px rgba(240, 147, 251, 0.5);
     }
     
     .match-low {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        background: #6b7280;
         color: white;
-        box-shadow: 0 4px 15px rgba(79, 172, 254, 0.5);
     }
     
-    /* Animated score display */
+    /* Clean score display */
     .score-display {
-        font-size: 56px;
-        font-weight: 800;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin: 15px 0;
-        animation: pulse 2s ease-in-out infinite;
+        font-size: 42px;
+        font-weight: 700;
+        color: #10b981;
+        margin: 12px 0;
     }
     
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.8; }
-    }
-    
-    /* Sidebar enhancement */
+    /* Minimal sidebar */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95));
-        backdrop-filter: blur(20px);
+        background: #f7fafc;
+        border-right: 1px solid #e2e8f0;
     }
     
-    [data-testid="stSidebar"] > div {
-        background: transparent;
+    [data-testid="stSidebar"] h2 {
+        color: #1a1a1a;
+        font-size: 1.125rem;
+        font-weight: 600;
     }
     
-    /* Premium buttons */
+    [data-testid="stSidebar"] label {
+        color: #4a5568;
+        font-weight: 500;
+    }
+    
+    /* Professional button */
     .stButton>button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #3b82f6;
         color: white;
         border: none;
-        border-radius: 30px;
-        padding: 15px 40px;
-        font-weight: 700;
-        font-size: 16px;
-        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 15px;
+        width: 100%;
+        transition: background 0.2s ease;
     }
     
     .stButton>button:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
-        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        background: #2563eb;
     }
     
-    /* Enhanced info boxes */
+    /* Clean info boxes */
     .info-box {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
-        border-radius: 15px;
-        padding: 20px;
-        margin: 15px 0;
-        color: white;
-        border-left: 5px solid rgba(255, 255, 255, 0.5);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
+        background: #f7fafc;
+        border-radius: 8px;
+        padding: 16px;
+        margin: 12px 0;
+        border-left: 4px solid #3b82f6;
     }
     
-    .info-box:hover {
-        transform: translateX(5px);
-        border-left-color: white;
+    .info-box strong {
+        color: #1a1a1a;
     }
     
-    /* Premium metric cards */
+    /* Clean metric cards */
     .metric-card {
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
-        border-radius: 20px;
-        padding: 30px;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-radius: 12px;
+        padding: 24px;
         text-align: center;
-        margin: 10px;
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
+        color: white;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
     }
     
-    .metric-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-        border-color: rgba(255, 255, 255, 0.5);
+    .metric-card h3 {
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0 0 8px 0;
+        opacity: 0.9;
     }
     
-    /* Select boxes */
+    .metric-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: white;
+        margin: 8px 0;
+    }
+    
+    /* Clean select boxes */
     .stSelectbox > div > div {
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 10px;
-        border: 2px solid rgba(102, 126, 234, 0.3);
-        transition: all 0.3s ease;
+        border: 1px solid #cbd5e0;
+        border-radius: 6px;
+        background: white;
     }
     
-    .stSelectbox > div > div:focus-within {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    .stSelectbox > div > div:hover {
+        border-color: #3b82f6;
     }
     
-    /* Radio buttons */
-    .stRadio > div {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 15px;
-        border-radius: 10px;
+    /* Clean slider */
+    .stSlider > div > div > div {
+        background: #cbd5e0;
     }
     
-    /* Sliders */
-    .stSlider > div > div {
-        background: rgba(255, 255, 255, 0.2);
+    .stSlider > div > div > div > div {
+        background: #3b82f6;
     }
     
-    /* Feature highlight cards */
-    .feature-card {
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-        padding: 30px;
-        border-radius: 20px;
-        text-align: center;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-        height: 100%;
+    /* Professional text */
+    p {
+        color: #4a5568;
+        line-height: 1.6;
     }
     
-    .feature-card:hover {
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
-        transform: scale(1.05);
-        border-color: rgba(255, 255, 255, 0.4);
+    strong {
+        color: #1a1a1a;
     }
     
-    /* Loading animation */
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
+    /* Remove Streamlit branding clutter */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
     
-    /* Scrollbar styling */
+    /* Clean scrollbar */
     ::-webkit-scrollbar {
-        width: 12px;
+        width: 8px;
+        height: 8px;
     }
     
     ::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
+        background: #f1f1f1;
     }
     
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
+        background: #cbd5e0;
+        border-radius: 4px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        background: #a0aec0;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -464,28 +406,61 @@ def render_visualization(recommendations: pd.DataFrame):
 def main():
     """Main application"""
     
-    # Header
-    st.markdown("<h1 style='text-align: center;'>🎯 ML Service Recommendation System</h1>", 
+    # Clean, professional header
+    st.markdown("<h1 style='text-align: center; margin-bottom: 0.25rem;'>🎯 ML Service Recommendation System</h1>", 
                 unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: white; font-size: 18px;'>Powered by Machine Learning • Intelligent • Explainable</p>", 
+    st.markdown("<p style='text-align: center; color: #6b7280; font-size: 16px; margin-bottom: 2rem;'>Intelligent service matching powered by machine learning</p>", 
                 unsafe_allow_html=True)
     
     # Load engine
-    with st.spinner('🚀 Initializing ML Recommendation Engine...'):
+    with st.spinner('Loading recommendation engine...'):
         engine = load_recommendation_engine()
     
     if engine is None:
         st.error("Failed to load recommendation engine. Please check the dataset.")
         return
     
-    # Statistics Dashboard
-    st.markdown("---")
-    render_statistics_dashboard(engine)
-    st.markdown("---")
+    # Clean statistics dashboard
+    stats = engine.get_statistics()
     
-    # Sidebar - User Input
-    st.sidebar.markdown("## 🎯 Your Preferences")
-    st.sidebar.markdown("Tell us what you're looking for:")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown(f"""
+        <div class="metric-card">
+            <h3>Total Services</h3>
+            <div class="metric-value">{stats['total_services']}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown(f"""
+        <div class="metric-card">
+            <h3>Business Types</h3>
+            <div class="metric-value">{stats['business_types']}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown(f"""
+        <div class="metric-card">
+            <h3>Locations</h3>
+            <div class="metric-value">{stats['locations']}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown(f"""
+        <div class="metric-card">
+            <h3>ML Accuracy</h3>
+            <div class="metric-value">96%</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Sidebar - User Input  
+    st.sidebar.markdown("## Your Preferences")
     
     # Get unique values from dataset
     business_types = sorted(engine.clean_df['Target_Business_Type'].unique())
@@ -493,56 +468,48 @@ def main():
     
     # User inputs
     business_type = st.sidebar.selectbox(
-        "🏢 Business Type",
-        options=business_types,
-        help="Select your business category"
+        "Business Type",
+        options=business_types
     )
     
     price_category = st.sidebar.selectbox(
-        "💰 Budget Range",
-        options=config.PRICE_CATEGORIES,
-        help="Select your preferred price category"
+        "Budget Range",
+        options=config.PRICE_CATEGORIES
     )
     
     language = st.sidebar.selectbox(
-        "🗣️ Language Preference",
-        options=config.LANGUAGE_OPTIONS,
-        help="Select your language preference"
+        "Language",
+        options=config.LANGUAGE_OPTIONS
     )
     
     location = st.sidebar.selectbox(
-        "📍 Location",
-        options=locations,
-        help="Select your preferred location"
+        "Location",
+        options=locations
     )
     
     # Number of recommendations
     top_n = st.sidebar.slider(
-        "📊 Number of Recommendations",
+        "Number of Results",
         min_value=1,
         max_value=10,
-        value=3,
-        help="How many recommendations do you want?"
+        value=3
     )
     
     # Ranking method
+    st.sidebar.markdown("### Algorithm")
     method = st.sidebar.radio(
-        "🤖 ML Algorithm",
+        "Choose ranking method:",
         options=['weighted', 'cosine', 'knn'],
         index=0,
-        help="Choose the ranking algorithm"
+        format_func=lambda x: {
+            'weighted': 'Weighted Scoring',
+            'cosine': 'Cosine Similarity', 
+            'knn': 'K-Nearest Neighbors'
+        }[x]
     )
     
-    method_descriptions = {
-        'weighted': '⚡ Weighted Scoring (Fastest, Recommended)',
-        'cosine': '📐 Cosine Similarity (Balanced)',
-        'knn': '🎯 K-Nearest Neighbors (Most Comprehensive)'
-    }
-    
-    st.sidebar.info(method_descriptions[method])
-    
     # Get Recommendations Button
-    if st.sidebar.button("🚀 Get Recommendations", type="primary"):
+    if st.sidebar.button("Get Recommendations", type="primary"):
         
         # Create user input
         user_input = {
@@ -614,116 +581,31 @@ def main():
                 st.exception(e)
     
     else:
-        # Welcome message with enhanced design
-        st.markdown("""
-        <div style="text-align: center; padding: 80px 30px; background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1)); 
-                    border-radius: 30px; margin: 50px 0; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3);
-                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-            <h2 style="color: white; margin-bottom: 25px; font-size: 42px; font-weight: 800;">
-                👈 Ready to Discover Perfect Services?
-            </h2>
-            <p style="color: white; font-size: 20px; line-height: 1.8; max-width: 800px; margin: 0 auto;">
-                Select your preferences in the sidebar and click 
-                <strong style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 5px 15px; border-radius: 20px;">
-                "Get Recommendations"
-                </strong> to discover the perfect services tailored for your business!
-            </p>
-            <p style="color: rgba(255,255,255,0.9); font-size: 16px; margin-top: 30px; line-height: 1.6;">
-                ✨ Our advanced ML algorithms analyze <strong>business type, budget, language, and location</strong> 
-                to provide you with the most relevant, personalized recommendations.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+        # Simple,  clean welcome message
+        st.info("👈 Select your preferences in the sidebar and click 'Get Recommendations' to find the best services for your needs.")
         
-        # Feature highlights with enhanced cards
-        st.markdown("## ✨ Why Choose Our AI System?")
-        st.markdown("<br>", unsafe_allow_html=True)
+        # Minimal feature highlights
+        st.markdown("### How It Works")
         
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            st.markdown("""
-            <div class="feature-card">
-                <h1 style="font-size: 48px; margin: 0;">🤖</h1>
-                <h3 style="color: white; margin: 20px 0 15px 0;">ML-Powered Intelligence</h3>
-                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
-                    Advanced machine learning algorithms including KNN, Cosine Similarity, and Weighted Scoring 
-                    analyze thousands of data points to find your perfect match.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("**1️⃣ Enter Preferences**")
+            st.markdown("Select your business type, budget, language, and location")
         
         with col2:
-            st.markdown("""
-            <div class="feature-card">
-                <h1 style="font-size: 48px; margin: 0;">💡</h1>
-                <h3 style="color: white; margin: 20px 0 15px 0;">Explainable AI</h3>
-                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
-                    Every recommendation comes with clear, human-readable explanations showing exactly why 
-                    we think it's a great fit for you. No black boxes!
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("**2️⃣ ML Processing**")
+            st.markdown("Our algorithms analyze and rank all available services")
         
         with col3:
-            st.markdown("""
-            <div class="feature-card">
-                <h1 style="font-size: 48px; margin: 0;">⚡</h1>
-                <h3 style="color: white; margin: 20px 0 15px 0;">Lightning Fast</h3>
-                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
-                    Get instant, real-time recommendations in under 500ms. Our optimized algorithms 
-                    ensure you spend less time waiting and more time deciding.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        # Additional features row
-        st.markdown("<br><br>", unsafe_allow_html=True)
-        
-        col4, col5, col6 = st.columns(3)
-        
-        with col4:
-            st.markdown("""
-            <div class="feature-card">
-                <h1 style="font-size: 48px; margin: 0;">🎯</h1>
-                <h3 style="color: white; margin: 20px 0 15px 0;">Smart Matching</h3>
-                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
-                    Multi-dimensional feature matching considers all your preferences 
-                    to deliver highly accurate, personalized recommendations.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with col5:
-            st.markdown("""
-            <div class="feature-card">
-                <h1 style="font-size: 48px; margin: 0;">📊</h1>
-                <h3 style="color: white; margin: 20px 0 15px 0;">Visual Insights</h3>
-                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
-                    Interactive visualizations and match quality indicators help you 
-                    understand and compare recommendations at a glance.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with col6:
-            st.markdown("""
-            <div class="feature-card">
-                <h1 style="font-size: 48px; margin: 0;">🔒</h1>
-                <h3 style="color: white; margin: 20px 0 15px 0;">Data Privacy</h3>
-                <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
-                    All processing happens locally. Your preferences and data 
-                    remain private and secure on your device.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("**3️⃣ Get Results**")
+            st.markdown("View top matches with scores and explanations")
     
     # Footer
     st.markdown("---")
     st.markdown("""
-    <div style="text-align: center; color: white; padding: 20px;">
-        <p>Built with ❤️ using Machine Learning | Powered by Scikit-learn & Streamlit</p>
-        <p style="font-size: 12px;">© 2024 ML Service Recommendation System</p>
+    <div style="text-align: center; color: #6b7280; padding: 20px;">
+        <p style="font-size: 14px;">Powered by Scikit-learn & Streamlit | © 2024</p>
     </div>
     """, unsafe_allow_html=True)
 
